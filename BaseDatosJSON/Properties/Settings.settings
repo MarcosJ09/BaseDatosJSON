@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BaseDatosJSON.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Ruta_DB_Productos" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Productos.json</Value>
+    </Setting>
+    <Setting Name="AutoCompletarJson" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MarcasDeTecnologia.json</Value>
+    </Setting>
+    <Setting Name="UsersDB" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">Users.json</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
