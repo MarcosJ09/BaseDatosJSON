@@ -49,7 +49,7 @@ namespace BaseDatosJSON
                     ProductoEncontrado["marca"] = TxtMarca.Text;
                     ProductoEncontrado["unidades"] = TxtUnidades.Text;
                     Form1.GuardarJson(Form1.ListaProductos);
-                 
+                    
                     
 
                 }

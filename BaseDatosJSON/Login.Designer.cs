@@ -33,6 +33,8 @@
             this.TxtPassword = new CuoreUI.Controls.cuiTextBox();
             this.kryptonToggleSwitch1 = new Krypton.Toolkit.KryptonToggleSwitch();
             this.BtnLogin = new ReaLTaiizor.Controls.DungeonButtonRight();
+            this.OlvidoContraseña = new System.Windows.Forms.LinkLabel();
+            this.BtnSendMail = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -132,6 +134,30 @@
             this.BtnLogin.TextAlignment = System.Drawing.StringAlignment.Center;
             this.BtnLogin.Click += new System.EventHandler(this.BtnLogin_Click);
             // 
+            // OlvidoContraseña
+            // 
+            this.OlvidoContraseña.AutoSize = true;
+            this.OlvidoContraseña.BackColor = System.Drawing.Color.Transparent;
+            this.OlvidoContraseña.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.OlvidoContraseña.LinkColor = System.Drawing.Color.White;
+            this.OlvidoContraseña.Location = new System.Drawing.Point(386, 590);
+            this.OlvidoContraseña.Name = "OlvidoContraseña";
+            this.OlvidoContraseña.Size = new System.Drawing.Size(219, 25);
+            this.OlvidoContraseña.TabIndex = 5;
+            this.OlvidoContraseña.TabStop = true;
+            this.OlvidoContraseña.Text = "¿Olvidó su contraseña?";
+            this.OlvidoContraseña.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.OlvidoContraseña_LinkClicked);
+            // 
+            // BtnSendMail
+            // 
+            this.BtnSendMail.Location = new System.Drawing.Point(700, 517);
+            this.BtnSendMail.Name = "BtnSendMail";
+            this.BtnSendMail.Size = new System.Drawing.Size(190, 30);
+            this.BtnSendMail.TabIndex = 6;
+            this.BtnSendMail.Text = "Enviar correo";
+            this.BtnSendMail.UseVisualStyleBackColor = true;
+            this.BtnSendMail.Click += new System.EventHandler(this.BtnSendMail_Click);
+            // 
             // Login
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -139,6 +165,8 @@
             this.BackgroundImage = global::BaseDatosJSON.Properties.Resources.background;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(988, 638);
+            this.Controls.Add(this.BtnSendMail);
+            this.Controls.Add(this.OlvidoContraseña);
             this.Controls.Add(this.BtnLogin);
             this.Controls.Add(this.kryptonToggleSwitch1);
             this.Controls.Add(this.TxtPassword);
@@ -147,17 +175,21 @@
             this.DoubleBuffered = true;
             this.Name = "Login";
             this.Text = "Login";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Login_FormClosed);
             this.Load += new System.EventHandler(this.Login_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private CuoreUI.Controls.cuiTextBox TxtUser;
         private CuoreUI.Controls.cuiTextBox TxtPassword;
         private Krypton.Toolkit.KryptonToggleSwitch kryptonToggleSwitch1;
         private ReaLTaiizor.Controls.DungeonButtonRight BtnLogin;
+        private CuoreUI.Controls.cuiTextBox TxtUser;
+        private System.Windows.Forms.LinkLabel OlvidoContraseña;
+        private System.Windows.Forms.Button BtnSendMail;
     }
 }
