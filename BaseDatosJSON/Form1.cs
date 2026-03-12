@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -162,7 +163,7 @@ namespace BaseDatosJSON
                     LimpiarFormulario();
                 }
             }
-            // GenerarAutoCompletado(ListaProductos, TxtMarca, 3);
+           
         }
 
         private void LimpiarFormulario()
@@ -248,19 +249,21 @@ namespace BaseDatosJSON
                                 KryptonMessageBoxButtons.YesNo,
                                 KryptonMessageBoxIcon.Warning
                                 );
-                if (pregunta == DialogResult.Yes)
+                if (pregunta==DialogResult.Yes) 
                 {
+                   
                     for (int i = 0; i < ListaProductos.Count; i++)
                     {
                         if (ListaProductos[i]["Codigo"].ToString().Equals(codigoAbuscar))
                         {
+                            
                             ListaProductos.RemoveAt(i);
                             i = ListaProductos.Count;
                         }
 
                     }
                 }
-                ListaProductos = LeerProductos(Settings.Default.Ruta_DB_Productos);
+                GuardarJson(listaProductos);
                 ImprimirDataGridView(ListaProductos, poisonDataGridView1);
 
 
@@ -280,6 +283,7 @@ namespace BaseDatosJSON
                         {
                             EliminarProducto(CodigoAbuscar, ListaProductos);
                             GuardarJson(ListaProductos);
+                            ImprimirDataGridView(ListaProductos, poisonDataGridView1);
                         }
 
                     }

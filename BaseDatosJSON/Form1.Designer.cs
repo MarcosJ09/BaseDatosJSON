@@ -198,6 +198,7 @@
             this.BtnGuardar.Size = new System.Drawing.Size(146, 32);
             this.BtnGuardar.TabIndex = 26;
             this.BtnGuardar.Text = "Guardar";
+            this.BtnGuardar.Click += new System.EventHandler(this.BtnGuardar_Click);
             // 
             // TxtUnidades
             // 
@@ -390,7 +391,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1010, 693);
+            this.ClientSize = new System.Drawing.Size(1010, 659);
             this.Controls.Add(this.metroDivider1);
             this.Controls.Add(this.poisonDataGridView1);
             this.Controls.Add(this.BtnGuardar);
@@ -406,7 +407,7 @@
             this.Controls.Add(this.skyLabel1);
             this.Controls.Add(this.bigLabel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
-            this.MinimumSize = new System.Drawing.Size(112, 35);
+            this.MinimumSize = new System.Drawing.Size(112, 60);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";

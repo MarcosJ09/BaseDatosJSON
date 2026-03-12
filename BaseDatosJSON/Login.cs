@@ -55,6 +55,7 @@ namespace BaseDatosJSON
         private void Login_Load(object sender, EventArgs e)
         {
             UsersList = Form1.LeerProductos(Settings.Default.UsersDB);
+          
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)
@@ -63,7 +64,7 @@ namespace BaseDatosJSON
             string Password = TxtPassword.Text;
             JObject AccesKeys = UsersList.FirstOrDefault(p => (string)p["user"] == User);//se obtiene un Jobject con el usuario
 
-            Debug.WriteLine(AccesKeys.ToString());
+           
             if (AccesKeys == null)
             {
 
@@ -74,7 +75,7 @@ namespace BaseDatosJSON
             else if ((int)AccesKeys["attemps"] == 0)
             {
 
-                MessageBox.Show("Este usuario fue bloqueado,pongase en contacte con servicio al cliente");
+                MessageBox.Show("Este usuario fue bloqueado,pongase en contacto  con servicio al cliente");
 
             }
             else if (!(User == (string)AccesKeys["user"] && Password == (string)AccesKeys["password"]))
@@ -89,7 +90,8 @@ namespace BaseDatosJSON
                 AccesKeys["access"] = true;
                 DialogResult Confirmation = MessageBox.Show($"Usted ingresará al usuario: {AccesKeys["user"]}", "Confirmacion", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
-                if (Confirmation == DialogResult.Yes && (bool)AccesKeys["access"] == true)// se abre el formulario si todo salio bien se 
+                //Se valida si es Admin o no
+                if ((Confirmation == DialogResult.Yes) && ((bool)AccesKeys["access"] == true) && ((string)AccesKeys["Type"]=="Customer"))// se abre el formulario si todo salio bien se 
                 {
 
                     Form1 form = new Form1();
@@ -100,6 +102,17 @@ namespace BaseDatosJSON
                     ActualizarUsuarios(UsersList, AccesKeys);
 
                 }
+                else if (Confirmation == DialogResult.Yes && (bool)AccesKeys["access"] == true && ((string)AccesKeys["Type"]=="Admin"))
+                {
+                    AdminPanel admin=new AdminPanel();
+                    admin.Show();
+                    this.Hide();
+                    AccesKeys["attemps"] = 3;
+
+                    ActualizarUsuarios(UsersList, AccesKeys);
+
+                }
+
 
             }
 
@@ -115,8 +128,6 @@ namespace BaseDatosJSON
             int index = UsersList.FindIndex(p => (string)p["user"] == TxtUser.ToString());
             if (index != -1)
             {
-                UsersList.RemoveAt(index);
-                UsersList.Add(accesskeys);
             }
 
             File.WriteAllText(Settings.Default.UsersDB,
@@ -158,7 +169,7 @@ namespace BaseDatosJSON
 
 
                     Recuperacion Recover = new Recuperacion(ResetUser);
-                   await EnviarMensaje(code,ResetUser);
+                    await EnviarMensaje(code, ResetUser);
 
                     Recover.Show();
                     this.Hide();
@@ -170,14 +181,14 @@ namespace BaseDatosJSON
                 }
             }
         }
-        private async Task EnviarMensaje(string mensaje,JObject UserInformation)
+        private async Task EnviarMensaje(string mensaje, JObject UserInformation)
         {
             string url = "http://69.48.202.253/send";
             var CuerpoMensaje = new MensajeWhatsApp
             {
                 clientId = "API-Estudiantes",
                 number = UserInformation["Phone"].ToString(),
-                message= "Su codigo de verificacion es: "+mensaje,
+                message = "Su codigo de verificacion es: " + mensaje,
 
             };
 
@@ -188,27 +199,34 @@ namespace BaseDatosJSON
             try
             {
 
-                HttpResponseMessage responseMessage= await client.PostAsync(url,content);
+                HttpResponseMessage responseMessage = await client.PostAsync(url, content);
 
-                if (responseMessage.IsSuccessStatusCode) 
+                if (responseMessage.IsSuccessStatusCode)
                 {
                     string resultado = await responseMessage.Content.ReadAsStringAsync();
                     Console.WriteLine("Enviado: " + resultado);
                 }
             }
-            catch (Exception ex) 
-            { 
-            Debug.WriteLine("Error "+ex.Message);
+            catch (Exception ex)
+            {
+                Debug.WriteLine("Error " + ex.Message);
 
             }
 
 
         }
 
-        private void BtnSendMail_Click(object sender, EventArgs e)
+        private void dungeonButtonRight1_Click(object sender, EventArgs e)
         {
-            
-
+            MailMessage correo=new MailMessage();
+            correo.From=new MailAddress("mago1010bs@gmail.com","Sistema de inventario");
+            correo.To.Add("mgabrieljimenezg@gmail.com");
+            correo.Subject = "Prueba de correo";
+            correo.Body = "Este correo es una prueba";
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com",587);
+            smtpClient.Credentials = new NetworkCredential("mago1010bs@gmail.com","licfdmtciolwhqdy");
+            smtpClient.EnableSsl = true;
+            smtpClient.Send(correo);
         }
     }
 }
