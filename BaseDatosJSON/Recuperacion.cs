@@ -50,5 +50,10 @@ namespace BaseDatosJSON
                 MessageBox.Show("El codigo no coincide");
             }
         }
+
+        private void Recuperacion_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

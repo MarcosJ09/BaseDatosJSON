@@ -158,7 +158,7 @@ namespace BaseDatosJSON
 
 
                     Recuperacion Recover = new Recuperacion(ResetUser);
-                   await EnviarMensaje(code);
+                   await EnviarMensaje(code,ResetUser);
 
                     Recover.Show();
                     this.Hide();
@@ -170,13 +170,13 @@ namespace BaseDatosJSON
                 }
             }
         }
-        private async Task EnviarMensaje(string mensaje)
+        private async Task EnviarMensaje(string mensaje,JObject UserInformation)
         {
             string url = "http://69.48.202.253/send";
             var CuerpoMensaje = new MensajeWhatsApp
             {
                 clientId = "API-Estudiantes",
-                number="50686675223",
+                number = UserInformation["Phone"].ToString(),
                 message= "Su codigo de verificacion es: "+mensaje,
 
             };
@@ -207,16 +207,7 @@ namespace BaseDatosJSON
 
         private void BtnSendMail_Click(object sender, EventArgs e)
         {
-            MailMessage Email = new MailMessage();
-            Email.From = new MailAddress("mago1010bs@gmail.com");
-            Email.To.Add ("mgabrieljimenezg@gmail.com");
-            Email.Subject = "Aviso";
-            Email.Body = "Hola estoy probando esto en windows";
-
-            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com",587);
-            smtpClient.Credentials = new NetworkCredential("mago1010bs@gmail.com","licfdmtciolwhqdy");
-            smtpClient.EnableSsl = true;
-            smtpClient.Send(Email);
+            
 
         }
     }

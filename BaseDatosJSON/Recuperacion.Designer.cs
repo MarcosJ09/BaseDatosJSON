@@ -154,6 +154,7 @@
             this.Controls.Add(this.TxtCode);
             this.Name = "Recuperacion";
             this.Text = "Recuperacion";
+            this.Load += new System.EventHandler(this.Recuperacion_Load);
             this.ResumeLayout(false);
 
         }
