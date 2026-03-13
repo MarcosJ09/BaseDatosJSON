@@ -55,7 +55,7 @@ namespace BaseDatosJSON
         private void Login_Load(object sender, EventArgs e)
         {
             UsersList = Form1.LeerProductos(Settings.Default.UsersDB);
-          
+
         }
 
         private void BtnLogin_Click(object sender, EventArgs e)
@@ -64,61 +64,62 @@ namespace BaseDatosJSON
             string Password = TxtPassword.Text;
             JObject AccesKeys = UsersList.FirstOrDefault(p => (string)p["user"] == User);//se obtiene un Jobject con el usuario
 
-           
+
             if (AccesKeys == null)
             {
 
 
                 MessageBox.Show("Este usuario no coincide con uno existente");
 
+                return;
             }
-            else if ((int)AccesKeys["attemps"] == 0)
+            if ((int)AccesKeys["attemps"] == 0)
             {
 
                 MessageBox.Show("Este usuario fue bloqueado,pongase en contacto  con servicio al cliente");
-
+                return;
             }
-            else if (!(User == (string)AccesKeys["user"] && Password == (string)AccesKeys["password"]))
+            if (Password != (string)AccesKeys["password"])
             {
                 MessageBox.Show("Usuario y/o contraseña incorrecta");
                 AccesKeys["attemps"] = (int)AccesKeys["attemps"] - 1;
 
                 ActualizarUsuarios(UsersList, AccesKeys);
+                return;
             }
-            else
+
+
+
+            DialogResult Confirmation = MessageBox.Show($"Usted ingresará al usuario: {AccesKeys["user"]}", "Confirmacion", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+
+            //Se valida si es Admin o no
+            if ((Confirmation == DialogResult.Yes) && ((string)AccesKeys["Type"] == "Customer"))// se abre el formulario si todo salio bien se 
             {
-                AccesKeys["access"] = true;
-                DialogResult Confirmation = MessageBox.Show($"Usted ingresará al usuario: {AccesKeys["user"]}", "Confirmacion", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
-                //Se valida si es Admin o no
-                if ((Confirmation == DialogResult.Yes) && ((bool)AccesKeys["access"] == true) && ((string)AccesKeys["Type"]=="Customer"))// se abre el formulario si todo salio bien se 
-                {
+                Form1 form = new Form1();
+                form.Show();
+                this.Hide();
+                AccesKeys["attemps"] = 3;
 
-                    Form1 form = new Form1();
-                    form.Show();
-                    this.Hide();
-                    AccesKeys["attemps"] = AccesKeys["attemps"] = 3;
-
-                    ActualizarUsuarios(UsersList, AccesKeys);
-
-                }
-                else if (Confirmation == DialogResult.Yes && (bool)AccesKeys["access"] == true && ((string)AccesKeys["Type"]=="Admin"))
-                {
-                    AdminPanel admin=new AdminPanel();
-                    admin.Show();
-                    this.Hide();
-                    AccesKeys["attemps"] = 3;
-
-                    ActualizarUsuarios(UsersList, AccesKeys);
-
-                }
-
+                ActualizarUsuarios(UsersList, AccesKeys);
 
             }
+            else if (Confirmation == DialogResult.Yes && ((string)AccesKeys["Type"] == "Admin"))
+            {
+                AdminPanel admin = new AdminPanel();
+                admin.Show();
+                this.Hide();
+                AccesKeys["attemps"] = 3;
 
-            ActualizarUsuarios(UsersList, AccesKeys);
+                ActualizarUsuarios(UsersList, AccesKeys);
+
+            }
 
         }
+
+
+
+
         /// <summary>
         /// Se utliza para actuaizar el Json con los datos de los usuarios;
         /// </summary>
@@ -218,13 +219,13 @@ namespace BaseDatosJSON
 
         private void dungeonButtonRight1_Click(object sender, EventArgs e)
         {
-            MailMessage correo=new MailMessage();
-            correo.From=new MailAddress("mago1010bs@gmail.com","Sistema de inventario");
+            MailMessage correo = new MailMessage();
+            correo.From = new MailAddress("mago1010bs@gmail.com", "Sistema de inventario");
             correo.To.Add("mgabrieljimenezg@gmail.com");
             correo.Subject = "Prueba de correo";
             correo.Body = "Este correo es una prueba";
-            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com",587);
-            smtpClient.Credentials = new NetworkCredential("mago1010bs@gmail.com","licfdmtciolwhqdy");
+            SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+            smtpClient.Credentials = new NetworkCredential("mago1010bs@gmail.com", "licfdmtciolwhqdy");
             smtpClient.EnableSsl = true;
             smtpClient.Send(correo);
         }
