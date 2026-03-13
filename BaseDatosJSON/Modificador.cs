@@ -1,6 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Krypton.Toolkit;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BaseDatosJSON
@@ -37,13 +44,13 @@ namespace BaseDatosJSON
 
                 if (ProductoEncontrado != null)
                 {
-                    ProductoEncontrado["nombre"] = TxtProducto.Text;
-                    ProductoEncontrado["categoria"] = TxtCategoria.SelectedIndex + "";
+                    ProductoEncontrado["nombre"]=TxtProducto.Text;
+                    ProductoEncontrado["categoria"]=TxtCategoria.SelectedIndex +"";
                     ProductoEncontrado["marca"] = TxtMarca.Text;
                     ProductoEncontrado["unidades"] = TxtUnidades.Text;
                     Form1.GuardarJson(Form1.ListaProductos);
-
-
+                    
+                    
 
                 }
                 else

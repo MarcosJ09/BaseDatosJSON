@@ -5,8 +5,15 @@ using Newtonsoft.Json.Linq;
 using ReaLTaiizor.Controls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 using System.Windows.Forms;
 
 namespace BaseDatosJSON
@@ -156,7 +163,7 @@ namespace BaseDatosJSON
                     LimpiarFormulario();
                 }
             }
-            // GenerarAutoCompletado(ListaProductos, TxtMarca, 3);
+           
         }
 
         private void LimpiarFormulario()
@@ -192,6 +199,7 @@ namespace BaseDatosJSON
             listaProductos.Add(jObject);
             File.WriteAllText(Settings.Default.Ruta_DB_Productos,
                 JsonConvert.SerializeObject(listaProductos, Formatting.Indented));
+            ImprimirDataGridView(ListaProductos, poisonDataGridView1);
         }
 
         public static void GuardarJson(List<JObject> listaProductos)
@@ -241,19 +249,21 @@ namespace BaseDatosJSON
                                 KryptonMessageBoxButtons.YesNo,
                                 KryptonMessageBoxIcon.Warning
                                 );
-                if (pregunta == DialogResult.Yes)
+                if (pregunta==DialogResult.Yes) 
                 {
+                   
                     for (int i = 0; i < ListaProductos.Count; i++)
                     {
                         if (ListaProductos[i]["Codigo"].ToString().Equals(codigoAbuscar))
                         {
+                            
                             ListaProductos.RemoveAt(i);
                             i = ListaProductos.Count;
                         }
 
                     }
                 }
-
+                GuardarJson(listaProductos);
                 ImprimirDataGridView(ListaProductos, poisonDataGridView1);
 
 
@@ -273,11 +283,9 @@ namespace BaseDatosJSON
                         {
                             EliminarProducto(CodigoAbuscar, ListaProductos);
                             GuardarJson(ListaProductos);
+                            ImprimirDataGridView(ListaProductos, poisonDataGridView1);
                         }
-                        else
-                        {
-                            MessageBox.Show("El producto a eliminar no existe");
-                        }
+
                     }
                     else
                     {
@@ -303,13 +311,17 @@ namespace BaseDatosJSON
                 ["unidades"] = poisonDataGridView1.SelectedRows[0].Cells[4].Value.ToString()
             });
             //Abrimos la ventana
-            if (mod.ShowDialog() == DialogResult.Yes)
+            mod.ShowDialog();
 
-            {
-                poisonDataGridView1.Rows.Clear();
-                ImprimirDataGridView(ListaProductos, poisonDataGridView1);
-            }
+            poisonDataGridView1.Rows.Clear();
+            ImprimirDataGridView(ListaProductos, poisonDataGridView1);
 
+
+
+        }
+
+        private void poisonDataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
 
         }
     }
