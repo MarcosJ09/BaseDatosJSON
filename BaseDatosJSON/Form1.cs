@@ -5,14 +5,8 @@ using Newtonsoft.Json.Linq;
 using ReaLTaiizor.Controls;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 using System.Windows.Forms;
 
 namespace BaseDatosJSON
@@ -310,7 +304,7 @@ namespace BaseDatosJSON
             });
             //Abrimos la ventana
             if (mod.ShowDialog() == DialogResult.Yes)
-               
+
             {
                 poisonDataGridView1.Rows.Clear();
                 ImprimirDataGridView(ListaProductos, poisonDataGridView1);
